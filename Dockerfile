@@ -25,7 +25,7 @@ RUN npm run build
 # Create script to handle migrations and start
 RUN echo '#!/bin/sh\n\
 npx prisma migrate deploy\n\
-exec "$@"' > /app/docker-entrypoint.sh && chmod +x /app/docker-entrypoint.sh
+exec "$@"' > /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -53,6 +53,9 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
+# Copy entrypoint script
+COPY --from=builder /docker-entrypoint.sh /docker-entrypoint.sh
+
 # Use the entrypoint script to run migrations before starting
-ENTRYPOINT ["/app/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["node", "server.js"]
