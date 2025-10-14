@@ -22,6 +22,11 @@ RUN npx prisma generate
 # Build Next.js
 RUN npm run build
 
+# Create script to handle migrations and start
+RUN echo '#!/bin/sh\n\
+npx prisma migrate deploy\n\
+exec "$@"' > /app/docker-entrypoint.sh && chmod +x /app/docker-entrypoint.sh
+
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
@@ -48,4 +53,6 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
+# Use the entrypoint script to run migrations before starting
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 CMD ["node", "server.js"]
