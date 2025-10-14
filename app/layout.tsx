@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
+import { Rethink_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+const rethinkSans = Rethink_Sans({
+  subsets: ["latin"],
+  weight: ["400", "700", "800"],
+  variable: "--font-rethink-sans",
+});
 
 export const metadata: Metadata = {
   title: "Marbella Club - Música Latina y Eventos",
@@ -27,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className="flex min-h-screen flex-col antialiased">
+      <body className={`${rethinkSans.variable} flex min-h-screen flex-col font-sans antialiased`}>
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

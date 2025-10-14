@@ -9,7 +9,11 @@
       "Bash(npx prisma:*)",
       "Bash(npm uninstall:*)",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Next.js + Prisma + PostgreSQL + Tailwind CSS\n\n- Setup Next.js 15 with App Router and TypeScript\n- Configure Tailwind CSS v3 for styling\n- Setup Prisma ORM with PostgreSQL\n- Create minimalist Header with navigation\n- Create responsive Footer with 4 columns\n- Add 5 pages: inicio, eventos, clases-de-salsa, listas-gratis, menu\n- Configure SEO optimization with metadata, sitemap, and robots.txt\n- Setup for SSG/ISR and PageSpeed optimization\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []

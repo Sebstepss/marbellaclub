@@ -12,3 +12,19 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model SalsaRegistration {
+  id                  String   @id @default(cuid())
+  nombreCompleto      String
+  rut                 String
+  telefono            String
+  email               String
+  participacion       String
+  nivelBaile          String
+  aceptaPoliticas     Boolean
+  confirmaAsistencia  Boolean
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("salsa_registrations")
+}

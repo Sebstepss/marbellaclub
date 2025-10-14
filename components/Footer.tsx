@@ -10,7 +10,13 @@ export default function Footer() {
               Sobre Nosotros
             </h3>
             <p className="text-sm text-gray-600">
-              Marbella Club - El mejor lugar para disfrutar de la música latina y la cultura.
+              Disco 100% Latina
+            </p>
+            <p className="mt-2 text-sm text-gray-600">
+              Viernes, Sábados y Domingos
+            </p>
+            <p className="mt-2 text-sm text-gray-600">
+              Barra libre Sábado y Domingo
             </p>
           </div>
 
@@ -22,6 +28,11 @@ export default function Footer() {
               <li>
                 <a href="/eventos" className="hover:text-gray-900 transition-colors">
                   Eventos
+                </a>
+              </li>
+              <li>
+                <a href="/reservas" className="hover:text-gray-900 transition-colors">
+                  Reservas
                 </a>
               </li>
               <li>
@@ -42,8 +53,18 @@ export default function Footer() {
               Contacto
             </h3>
             <ul className="space-y-2 text-sm text-gray-600">
-              <li>Email: info@marbellaclub.com</li>
-              <li>Tel: +34 123 456 789</li>
+              <li>Tel: +56 9 4941 3292</li>
+              <li>
+                <a
+                  href="https://maps.google.com/?q=Edmundo+Pérez+Zujovic+4624,+Antofagasta,+Chile"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gray-900 transition-colors"
+                >
+                  Av. Edmundo Pérez Zujovic 4624<br />
+                  Antofagasta, Chile
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -60,6 +81,11 @@ export default function Footer() {
               <li>
                 <a href="#" className="hover:text-gray-900 transition-colors">
                   Facebook
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gray-900 transition-colors">
+                  TikTok
                 </a>
               </li>
             </ul>
