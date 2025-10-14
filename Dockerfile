@@ -37,14 +37,18 @@ COPY --from=builder /app/public ./public
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
-# Automatically leverage output traces to reduce image size
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-# Create entrypoint script before switching user
+# Create entrypoint script before copying files
 RUN echo '#!/bin/sh\n\
 npx prisma migrate deploy\n\
-exec "$@"' > /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
+exec "$@"' > /app/entrypoint.sh && chmod +x /app/entrypoint.sh
+
+# Copy files with correct ownership
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+
+# Ensure correct permissions
+RUN chown -R nextjs:nodejs /app
 
 # Switch to non-root user
 USER nextjs
@@ -55,5 +59,5 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 # Use the entrypoint script to run migrations before starting
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
 CMD ["node", "server.js"]
