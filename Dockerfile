@@ -40,6 +40,12 @@ RUN chown nextjs:nodejs .next
 # Copy files with correct ownership
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
+
+# Ensure correct permissions for prisma
+RUN mkdir -p /app/.npm/_npx && chown -R nextjs:nodejs /app/.npm
 
 # Switch to non-root user
 USER nextjs
