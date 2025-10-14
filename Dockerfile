@@ -37,18 +37,9 @@ COPY --from=builder /app/public ./public
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
-# Create entrypoint script before copying files
-RUN echo '#!/bin/sh\n\
-npx prisma migrate deploy\n\
-exec "$@"' > /app/entrypoint.sh && chmod +x /app/entrypoint.sh
-
 # Copy files with correct ownership
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
-
-# Ensure correct permissions
-RUN chown -R nextjs:nodejs /app
 
 # Switch to non-root user
 USER nextjs
@@ -58,6 +49,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# Use the entrypoint script to run migrations before starting
-ENTRYPOINT ["/app/entrypoint.sh"]
+# Start the server
 CMD ["node", "server.js"]
