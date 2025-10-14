@@ -41,17 +41,18 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Create entrypoint script before switching user
+RUN echo '#!/bin/sh\n\
+npx prisma migrate deploy\n\
+exec "$@"' > /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
+
+# Switch to non-root user
 USER nextjs
 
 EXPOSE 3000
 
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
-
-# Create entrypoint script in the final stage
-RUN echo '#!/bin/sh\n\
-npx prisma migrate deploy\n\
-exec "$@"' > /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
 
 # Use the entrypoint script to run migrations before starting
 ENTRYPOINT ["/docker-entrypoint.sh"]
