@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -19,8 +21,23 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-black">
       <nav className="container mx-auto h-20 max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-full items-center justify-between">
-          {/* Logo - Siempre visible */}
+        {/* Desktop View */}
+        <div className="hidden lg:flex h-full items-center justify-between">
+          {/* Left Navigation */}
+          <ul className="flex items-center gap-6">
+            {leftNavItems.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="text-sm font-normal uppercase tracking-wide text-white transition-all hover:bg-red-600 hover:text-white px-4 py-2 rounded"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {/* Centered Logo for Desktop */}
           <Link href="/" className="flex items-center">
             <Image
               src="/assets/images/logo.png"
@@ -32,38 +49,39 @@ export default function Header() {
             />
           </Link>
 
-          {/* Navegación Desktop */}
-          <div className="hidden lg:flex lg:items-center lg:justify-between lg:flex-1 lg:px-12">
-            <ul className="flex items-center gap-6">
-              {leftNavItems.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm font-normal uppercase tracking-wide text-white transition-all hover:bg-red-600 hover:text-white px-4 py-2 rounded"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <ul className="flex items-center gap-6">
-              {rightNavItems.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm font-normal uppercase tracking-wide text-white transition-all hover:bg-red-600 hover:text-white px-4 py-2 rounded"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Right Navigation */}
+          <ul className="flex items-center gap-6">
+            {rightNavItems.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="text-sm font-normal uppercase tracking-wide text-white transition-all hover:bg-red-600 hover:text-white px-4 py-2 rounded"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-          {/* Botón Menú Hamburguesa */}
+        {/* Mobile View */}
+        <div className="lg:hidden flex h-full items-center justify-between">
+          {/* Left-aligned Logo for Mobile */}
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/assets/images/logo.png"
+              alt="Marbella Club"
+              width={80}
+              height={80}
+              className="h-16 w-auto"
+              priority
+            />
+          </Link>
+
+          {/* Hamburger Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 text-white hover:bg-red-600 rounded"
+            className="p-2 text-white hover:bg-red-600 rounded"
             aria-label="Menu"
           >
             <svg
